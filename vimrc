@@ -28,6 +28,19 @@
     Plug 'wincent/command-t'
   call plug#end()
 
+"" Program/Plugin Configuration
+  if executable('ag')
+    " Use Ag over Grep
+    set grepprg=ag\ --nogroup\ --nocolor
+    let g:agprg="ag --vimgrep"
+
+    " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+    let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+  endif
+  let g:SuperTabLongestEnhanced = 1
+  let g:CommandTCancelMap = ['<ESC>', '<C-c>']
+  let g:CommandTMaxHeight = 10
+
 "" Indentation
   filetype plugin indent on
   set expandtab
@@ -50,6 +63,7 @@
   set foldnestmax=1
 
 "" Remaps
+  map ; <plug>NERDCommenterToggle
   nmap , .`[<down>
   nmap m .`[n
   nmap . .`[
@@ -65,9 +79,10 @@
   " Fix escape in visual mode.
     vnoremap  
 
-"" Leader Commands
+"" Commands
   nnoremap <Leader><Leader> :<up><CR>
   nnoremap <silent> <Leader>V :exec 'tabdo windo source $MYVIMRC' <bar> exec 'tabdo windo filetype detect' <bar> echo 'vimrc reloaded'<CR>
+  map <C-n> :NERDTreeToggle<CR>
 
 "" Gui Configuration
   set guioptions-=Tl
@@ -76,6 +91,15 @@
 "" Colorscheme
   " Since most terms 256 colors
   set t_Co=256
+
+  " Force background transparency
+  let g:CSApprox_hook_post = 
+        \ ['hi Normal ctermbg=NONE',
+        \ 'hi NonText ctermbg=NONE',
+        \ 'hi LineNr ctermbg=NONE',        
+        \ 'hi LineNr ctermbg=NONE',        
+        \ ]
+
 
   colorscheme blakely
 
