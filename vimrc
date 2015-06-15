@@ -5,6 +5,28 @@
   set number
   set title
   syntax on
+"" Plugins
+  call plug#begin('~/.vim/plugged')
+    " Causes problems with reloads.
+    "Plug 'ardagnir/vimbed'
+    Plug 'chrisbra/recover.vim'
+    Plug 'ervandew/supertab'
+    Plug 'godlygeek/csapprox'
+    Plug 'godlygeek/tabular'
+    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
+    Plug 'kien/ctrlp.vim'
+    Plug 'ludovicchabant/vim-lawrencium'
+    Plug 'nathanaelkane/vim-indent-guides'
+    Plug 'rking/ag.vim'
+    Plug 'rust-lang/rust.vim'
+    Plug 'scrooloose/nerdcommenter'
+    Plug 'scrooloose/nerdtree'
+    Plug 'scrooloose/syntastic'
+    Plug 'tmhedberg/matchit'
+    Plug 'tpope/vim-fugitive'
+    Plug 'vim-scripts/a.vim'
+    Plug 'wincent/command-t'
+  call plug#end()
 
 "" Indentation
   filetype plugin indent on
