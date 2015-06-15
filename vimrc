@@ -5,6 +5,13 @@
   set number
   set title
   syntax on
+  set history=1000
+  set undolevels=1000
+  set noerrorbells
+  set nobackup
+  set noswapfile
+  set nowrap
+
 "" Plugins
   call plug#begin('~/.vim/plugged')
     " Causes problems with reloads.
@@ -45,14 +52,18 @@
   filetype plugin indent on
   set expandtab
   set backspace=indent,eol,start
+  set autoindent
+  set copyindent
   set tabstop=8
   set softtabstop=2
   set shiftwidth=2
+  set shiftround
 
 "" Searching
   set ignorecase
   set smartcase
   set hlsearch
+  set incsearch
 
 "" Completion
   set completeopt=menuone,longest
@@ -70,7 +81,6 @@
   nmap H <C-o>
   nmap L <C-i>
   nmap M @m`[n
-  nmap <Space> za
 
   " Use CTRL-S for saving, also in Insert mode
     noremap <C-S> :update<CR>
@@ -83,6 +93,7 @@
   nnoremap <Leader><Leader> :<up><CR>
   nnoremap <silent> <Leader>V :exec 'tabdo windo source $MYVIMRC' <bar> exec 'tabdo windo filetype detect' <bar> echo 'vimrc reloaded'<CR>
   map <C-n> :NERDTreeToggle<CR>
+  cmap w!! w !sudo tee % >/dev/null
 
 "" Gui Configuration
   set guioptions-=Tl
