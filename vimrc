@@ -18,6 +18,7 @@
   call plug#begin('~/.vim/plugged')
     " Causes problems with reloads.
     "Plug 'ardagnir/vimbed'
+    Plug 'airblade/vim-gitgutter'
     Plug 'chrisbra/recover.vim'
     Plug 'ervandew/supertab'
     Plug 'godlygeek/csapprox'
@@ -25,16 +26,26 @@
     Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
     Plug 'kien/ctrlp.vim'
     Plug 'ludovicchabant/vim-lawrencium'
+    Plug 'MattesGroeger/vim-bookmarks'
     Plug 'nathanaelkane/vim-indent-guides'
+    Plug 'phildawes/racer'
     Plug 'rking/ag.vim'
     Plug 'rust-lang/rust.vim'
     Plug 'scrooloose/nerdcommenter'
     Plug 'scrooloose/nerdtree'
     Plug 'scrooloose/syntastic'
+    Plug 'sgeb/vim-diff-fold'
+    Plug 'Shougo/neomru.vim'
+    Plug 'Shougo/unite.vim'
     Plug 'tmhedberg/matchit'
     Plug 'tpope/vim-fugitive'
     Plug 'vim-scripts/a.vim'
     Plug 'wincent/command-t'
+    " Colorschemes:
+    Plug 'vim-scripts/pyte'
+    Plug 'vim-scripts/summerfruit.vim'
+    Plug 'vim-scripts/oceanlight'
+    Plug 'vim-scripts/oceandeep'
   call plug#end()
 
 "" Program/Plugin Configuration
