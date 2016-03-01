@@ -49,6 +49,8 @@ hi String		gui=none			guifg=#0077aa
 hi Boolean						guifg=#0088bb
 hi Pmenu		gui=none	guibg=#000000	guifg=#555555
 hi PmenuSel		gui=none	guibg=#222222	guifg=#aaaaff
+hi SignColumn           gui=none        guibg=black
+hi ColorColumn          gui=none        guibg=#111111
 
 
 
