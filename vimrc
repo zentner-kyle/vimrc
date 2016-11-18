@@ -29,7 +29,6 @@
     Plug 'MattesGroeger/vim-bookmarks'
     Plug 'nathanaelkane/vim-indent-guides'
     Plug 'phildawes/racer'
-    Plug 'rking/ag.vim'
     Plug 'rust-lang/rust.vim'
     Plug 'scrooloose/nerdcommenter'
     Plug 'scrooloose/nerdtree'
@@ -41,22 +40,41 @@
     Plug 'tpope/vim-fugitive'
     Plug 'vim-scripts/a.vim'
     Plug 'wincent/command-t'
+    Plug 'slashmili/alchemist.vim'
+    Plug 'elixir-lang/vim-elixir'
+    Plug 'mattreduce/vim-mix'
+    Plug 'avdgaag/vim-phoenix'
+    Plug 'mhinz/vim-grepper'
+    Plug 'dkprice/vim-easygrep'
     " Colorschemes:
     Plug 'vim-scripts/pyte'
     Plug 'vim-scripts/summerfruit.vim'
     Plug 'vim-scripts/oceanlight'
     Plug 'vim-scripts/oceandeep'
   call plug#end()
-
 "" Program/Plugin Configuration
   if executable('ag')
     " Use Ag over Grep
     set grepprg=ag\ --nogroup\ --nocolor
-    let g:agprg="ag --vimgrep"
+    let g:ag_prg="ag --vimgrep"
 
     " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
     let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
   endif
+
+  if executable("rg")
+      " Use ripgrep over Grep
+      set grepprg=rg\ --vimgrep\ --no-heading
+      set grepformat=%f:%l:%c:%m,%f:%l:%m
+      let g:ag_prg = 'rg --vimgrep --no-heading'
+
+      " Use rg in CtrlP for listing files. Lightning fast and respects .gitignore
+      let g:ctrlp_user_command = 'rg . -l -g ""'
+  endif
+
+  let g:grepper               = {}
+  let g:grepper.tools         = ['rg', 'git', 'ag', 'grep']
+
   let g:SuperTabLongestEnhanced = 1
   let g:CommandTCancelMap = ['<ESC>', '<C-c>']
   let g:CommandTMaxHeight = 10
@@ -109,6 +127,8 @@
 "" Commands
   nnoremap <Leader><Leader> :<up><CR>
   nnoremap <silent> <Leader>V :exec 'tabdo windo source $MYVIMRC' <bar> exec 'tabdo windo filetype detect' <bar> echo 'vimrc reloaded'<CR>
+  nnoremap <leader>g :Grepper -cword -noprompt<cr>
+  nnoremap <leader>G :Grepper<cr>
   map <C-n> :NERDTreeToggle<CR>
   cmap w!! w !sudo tee % >/dev/null
   nmap <Leader>u :Unite buffer vim_bookmarks file<CR>
