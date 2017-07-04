@@ -16,7 +16,7 @@ hi Constant		gui=bold			guifg=#0077bb
 hi Cursor		gui=none	guibg=white	guifg=#ff0000
 hi Directory		gui=none			guifg=#006688
 hi Identifier		gui=none			guifg=#bbbbbb
-hi Normal		gui=bold	guibg=black	guifg=#888899
+hi Normal		gui=bold	guibg=black	guifg=#888899 ctermbg=none
 hi PreProc		gui=bold			guifg=#990099
 hi Statement		gui=bold			guifg=#999999
 hi Type			gui=none			guifg=#555555
@@ -27,12 +27,12 @@ hi DiffChange		gui=none			guifg=#0000ff
 hi DiffText		gui=none			guifg=#ffffff
 hi Folded						guifg=#5555aa
 hi IncSearch		gui=underline
-hi LineNr		gui=none			guifg=#444444
+hi LineNr		gui=none	guibg=black	guifg=#444444 ctermbg=none
 hi ErrorMsg		gui=none			guifg=#000000
 hi Special		gui=none			guifg=#44aaff
 hi ModeMsg 		gui=none			guifg=#bbbbbb
 hi MoreMsg 		gui=none			guifg=#bbbbbb
-hi NonText 		gui=none			guifg=#bbbbbb
+hi NonText 		gui=none	guibg=black	guifg=#bbbbbb ctermbg=none
 hi Question 		gui=none			guifg=#bbbbbb
 hi SpecialKey 		gui=none			guifg=#bbbbbb
 hi StatusLine 		gui=none	guibg=#222222	guifg=#ffffff
@@ -52,6 +52,13 @@ hi PmenuSel		gui=none	guibg=#222222	guifg=#aaaaff
 hi SignColumn           gui=none        guibg=black
 hi ColorColumn          gui=none        guibg=#111111
 
+
+let g:CSApprox_hook_post = 
+      \ ['hi Normal ctermbg=NONE',
+      \ 'hi NonText ctermbg=NONE',
+      \ 'hi LineNr ctermbg=NONE',        
+      \ 'hi LineNr ctermbg=NONE',        
+      \ ]
 
 
 "vim: sw=8 noexpandtab

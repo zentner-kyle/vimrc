@@ -16,41 +16,54 @@
 
 "" Plugins
   call plug#begin('~/.vim/plugged')
-    " Causes problems with reloads.
-    "Plug 'ardagnir/vimbed'
-    Plug 'airblade/vim-gitgutter'
-    Plug 'chrisbra/recover.vim'
-    Plug 'ervandew/supertab'
-    Plug 'godlygeek/csapprox'
-    Plug 'godlygeek/tabular'
-    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
-    Plug 'kien/ctrlp.vim'
-    Plug 'ludovicchabant/vim-lawrencium'
-    Plug 'MattesGroeger/vim-bookmarks'
-    Plug 'nathanaelkane/vim-indent-guides'
-    Plug 'phildawes/racer'
-    Plug 'rust-lang/rust.vim'
-    Plug 'scrooloose/nerdcommenter'
-    Plug 'scrooloose/nerdtree'
+    " Status:
+    Plug 'vim-airline/vim-airline'
+    Plug 'vim-airline/vim-airline-themes'
+    Plug 'neomake/neomake'
     Plug 'scrooloose/syntastic'
-    Plug 'sgeb/vim-diff-fold'
-    Plug 'Shougo/neomru.vim'
-    Plug 'Shougo/unite.vim'
-    Plug 'tmhedberg/matchit'
+    " Versioning:
+    Plug 'airblade/vim-gitgutter'
     Plug 'tpope/vim-fugitive'
+    Plug 'ludovicchabant/vim-lawrencium'
+    Plug 'sgeb/vim-diff-fold'
+    " Navigation:
+    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
+    Plug 'junegunn/fzf.vim'
+    Plug 'MattesGroeger/vim-bookmarks'
+    Plug 'scrooloose/nerdtree'
+    Plug 'mhinz/vim-grepper'
+    Plug 'Shougo/neomru.vim'
+    Plug 'Shougo/denite.nvim'
+    " Tools:
+    Plug 'godlygeek/tabular'
+    Plug 'nathanaelkane/vim-indent-guides'
+    Plug 'scrooloose/nerdcommenter'
+    Plug 'chrisbra/recover.vim'
+    Plug 'tmhedberg/matchit'
     Plug 'vim-scripts/a.vim'
-    Plug 'wincent/command-t'
+    " Completion:
+    "Plug 'Valloric/YouCompleteMe'
+    Plug 'ajh17/VimCompletesMe'
+    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+    " Elixir:
     Plug 'slashmili/alchemist.vim'
     Plug 'elixir-lang/vim-elixir'
     Plug 'mattreduce/vim-mix'
     Plug 'avdgaag/vim-phoenix'
-    Plug 'mhinz/vim-grepper'
-    Plug 'dkprice/vim-easygrep'
+    " Reason:
+    Plug 'reasonml/vim-reason-loader'
+    " Rust:
+    Plug 'racer-rust/vim-racer'
+    Plug 'rust-lang/rust.vim'
     " Colorschemes:
     Plug 'vim-scripts/pyte'
+    Plug 'vim-scripts/mayansmoke'
     Plug 'vim-scripts/summerfruit.vim'
     Plug 'vim-scripts/oceanlight'
     Plug 'vim-scripts/oceandeep'
+    Plug 'mhartington/oceanic-next'
+    Plug 'rakr/vim-one'
+    Plug 'morhetz/gruvbox'
   call plug#end()
 "" Program/Plugin Configuration
   if executable('ag')
@@ -59,7 +72,7 @@
     let g:ag_prg="ag --vimgrep"
 
     " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-    let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+    "let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
   endif
 
   if executable("rg")
@@ -69,18 +82,24 @@
       let g:ag_prg = 'rg --vimgrep --no-heading'
 
       " Use rg in CtrlP for listing files. Lightning fast and respects .gitignore
-      let g:ctrlp_user_command = 'rg . -l -g ""'
+      let g:ctrlp_user_command = 'rg --color never %s -l -g ""'
   endif
 
   let g:grepper               = {}
   let g:grepper.tools         = ['rg', 'git', 'ag', 'grep']
 
-  let g:SuperTabLongestEnhanced = 1
   let g:CommandTCancelMap = ['<ESC>', '<C-c>']
   let g:CommandTMaxHeight = 10
   let g:bookmark_save_per_working_dir = 0
   let g:bookmark_auto_save = 1
   let g:syntastic_cpp_checkers = ['cpplint', 'clang_check']
+  "let g:syntastic_rust_checkers = ['rustc']
+  "let g:neocomplete#enable_at_startup = 1
+  let g:deoplete#enable_at_startup = 1
+  let g:rustfmt_autosave = 1
+  let g:racer_cmd = "~/.cargo/bin/racer"
+  let g:racer_experimental_completer = 1
+  autocmd! BufWritePost * Neomake
 
 "" Indentation
   filetype plugin indent on
@@ -129,51 +148,88 @@
   nnoremap <silent> <Leader>V :exec 'tabdo windo source $MYVIMRC' <bar> exec 'tabdo windo filetype detect' <bar> echo 'vimrc reloaded'<CR>
   nnoremap <leader>g :Grepper -cword -noprompt<cr>
   nnoremap <leader>G :Grepper<cr>
-  map <C-n> :NERDTreeToggle<CR>
   cmap w!! w !sudo tee % >/dev/null
-  nmap <Leader>u :Unite buffer vim_bookmarks file<CR>
-  nmap <Leader>o :FZF<CR>
+  nmap <Leader>o :Files<CR>
+  nmap <Leader>p :Buffers<CR>
 
-"" Unite
-  let g:unite_source_history_yank_enable = 1
-  "call unite#filters#matcher_default#use(['matcher_fuzzy'])
-  "nnoremap <leader>t :<C-u>Unite -no-split -buffer-name=files   -start-insert file_rec/async:!<cr>
-  "nnoremap <leader>f :<C-u>Unite -no-split -buffer-name=files   -start-insert file<cr>
-  "nnoremap <leader>r :<C-u>Unite -no-split -buffer-name=mru     -start-insert file_mru<cr>
-  "nnoremap <leader>o :<C-u>Unite -no-split -buffer-name=outline -start-insert outline<cr>
-  "nnoremap <leader>y :<C-u>Unite -no-split -buffer-name=yank    history/yank<cr>
-  "nnoremap <leader>e :<C-u>Unite -no-split -buffer-name=buffer  buffer<cr>
-
-  " Custom mappings for the unite buffer
-  autocmd FileType unite call s:unite_settings()
-  function! s:unite_settings()
-    " Play nice with supertab
-    let b:SuperTabDisabled=1
-    " Enable navigation with control-j and control-k in insert mode
-    imap <buffer> <C-j>   <Plug>(unite_select_next_line)
-    imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
-    nmap <buffer> <ESC>   <Plug>(unite_exit)
-  endfunction
+"" Denite
+  nnoremap <leader>t :<C-u>Denite file_rec<cr>
+  nnoremap <leader>f :<C-u>Denite file<cr>
+  nnoremap <leader>r :<C-u>Denite file_mru<cr>
+  nnoremap <leader>e :<C-u>Denite buffer<cr>
+  " Custom mappings for the denite buffer
+  call denite#custom#map(
+            \ 'insert',
+            \ '<C-j>',
+            \ '<denite:move_to_next_line>',
+            \ 'noremap'
+            \)
+  call denite#custom#map(
+            \ 'insert',
+            \ '<C-k>',
+            \ '<denite:move_to_previous_line>',
+            \ 'noremap'
+            \)
+  call denite#custom#map(
+            \ 'insert',
+            \ '<C-n>',
+            \ '<denite:move_to_next_line>',
+            \ 'noremap'
+            \)
+  call denite#custom#map(
+            \ 'insert',
+            \ '<C-p>',
+            \ '<denite:move_to_previous_line>',
+            \ 'noremap'
+            \)
+  " Ripgrep command on grep source
+  call denite#custom#var('grep', 'command', ['rg'])
+  call denite#custom#var('grep', 'default_opts',
+                  \ ['--vimgrep', '--no-heading'])
+  call denite#custom#var('grep', 'recursive_opts', [])
+  call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
+  call denite#custom#var('grep', 'separator', ['--'])
+  call denite#custom#var('grep', 'final_opts', [])
 
 "" Gui Configuration
   set guioptions-=Tl
   "set guifont=Inconsolata\ Medium\ 10
 
 "" Colorscheme
-  " Since most terms 256 colors
-  set t_Co=256
+  set termguicolors
 
   " Force background transparency
-  let g:CSApprox_hook_post = 
-        \ ['hi Normal ctermbg=NONE',
-        \ 'hi NonText ctermbg=NONE',
-        \ 'hi LineNr ctermbg=NONE',        
-        \ 'hi LineNr ctermbg=NONE',        
-        \ ]
-  "let &colorcolumn="80,".join(range(120,999),",")
-  let &colorcolumn="80,100,120"
+  "let g:CSApprox_hook_post =
+        "\ ['hi Normal ctermbg=NONE',
+        "\ 'hi NonText ctermbg=NONE',
+        "\ 'hi LineNr ctermbg=NONE',
+        "\ 'hi LineNr ctermbg=NONE',
+        "\ ]
+  let g:CSApprox_hook_post = []
+  let &colorcolumn="100,120"
 
-  colorscheme blakely
+  set background=dark
+
+  colorscheme OceanicNext
+  let g:airline_theme='oceanicnext'
+
+"" Airline
+  if !exists('g:airline_symbols')
+      let g:airline_symbols = {}
+  endif
+
+  " unicode symbols
+  let g:airline_symbols.paste = 'Þ'
+  let g:airline_symbols.whitespace = 'Ξ'
+
+  " airline symbols
+  let g:airline_left_sep = ''
+  let g:airline_left_alt_sep = ''
+  let g:airline_right_sep = ''
+  let g:airline_right_alt_sep = ''
+  let g:airline_symbols.branch = ''
+  let g:airline_symbols.readonly = ''
+  let g:airline_symbols.linenr = ''
 
 "" Clipboard remaps
   "set clipboard=unnamed,unnamedplus
