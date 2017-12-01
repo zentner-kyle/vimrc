@@ -4,6 +4,7 @@
   set autowrite
   set number
   set title
+  set wrap
   syntax on
   set history=1000
   set undolevels=1000
@@ -37,6 +38,7 @@
     " Tools:
     Plug 'godlygeek/tabular'
     Plug 'nathanaelkane/vim-indent-guides'
+    Plug 'dhruvasagar/vim-table-mode'
     Plug 'scrooloose/nerdcommenter'
     Plug 'chrisbra/recover.vim'
     Plug 'tmhedberg/matchit'
@@ -99,7 +101,8 @@
   let g:rustfmt_autosave = 1
   let g:racer_cmd = "~/.cargo/bin/racer"
   let g:racer_experimental_completer = 1
-  autocmd! BufWritePost * Neomake
+  call neomake#configure#automake('nw', 750)
+  let g:neomake_tex_enabled_makers = ['pdflatex']
 
 "" Indentation
   filetype plugin indent on
