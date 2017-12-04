@@ -11,7 +11,6 @@
   set noerrorbells
   set nobackup
   set noswapfile
-  set nowrap
   set noerrorbells visualbell t_vb=
   autocmd GUIEnter * set visualbell t_vb=
 
